@@ -69,12 +69,29 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      cocktails: [whiskeySourRecipe],
       filteredCocktails: [whiskeySourRecipe]
     }
   }
 
   handleSearch = (value) => {
-    alert('Searching for ' + value);
+    const normalizedString = (str) => {
+      return str.toLowerCase();
+    }
+
+    const stringAlmostContains = (left, right) => {
+      return normalizedString(left).indexOf(normalizedString(right)) > -1;
+    }
+
+    const cocktailMatchesQuery = (cocktail) => {
+      return stringAlmostContains(cocktail.name, value);
+    }
+
+    const filteredCocktails = this
+      .state
+      .cocktails
+      .filter(cocktailMatchesQuery);
+    this.setState({filteredCocktails: filteredCocktails});
   }
 
   render() {
