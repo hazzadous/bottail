@@ -83,8 +83,28 @@ class App extends Component {
       return normalizedString(left).indexOf(normalizedString(right)) > -1;
     }
 
+    const parseQueryStringToIngredients = (queryString) => {
+      return value
+        .split(',')
+        .map((str) => str.trim());
+    }
+
+    const ingredientAvailable = (ingredientName, availableIngredientsNames) => {
+      const matchedIngredients = availableIngredientsNames.filter((availableIngredientName) => stringAlmostContains(ingredientName, availableIngredientName));
+      return matchedIngredients.length > 0;
+    }
+
+    const noIngredientsMissing = (requiredIngredientsNames, availableIngredientsNames) => {
+      const missingIngredientsNames = requiredIngredientsNames.filter((ingredientName) => !ingredientAvailable(ingredientName, availableIngredientsNames));
+      return missingIngredientsNames.length === 0;
+    }
+
     const cocktailMatchesQuery = (cocktail) => {
-      return stringAlmostContains(cocktail.name, value);
+      const requiredIngredientsNames = cocktail
+        .ingredients
+        .map((ingredient) => ingredient.name);
+      const availableIngredientsNames = parseQueryStringToIngredients(value);
+      return noIngredientsMissing(requiredIngredientsNames, availableIngredientsNames);
     }
 
     const filteredCocktails = this
