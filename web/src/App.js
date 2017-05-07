@@ -66,11 +66,20 @@ class SearchBox extends Component {
 }
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filteredCocktails: [whiskeySourRecipe]
+    }
+  }
+
   handleSearch = (value) => {
     alert('Searching for ' + value);
   }
 
   render() {
+    const filteredCocktails = this.state.filteredCocktails;
+    const recipeSummaryItems = filteredCocktails.map((cocktail) => <li><RecipeSummary recipe={cocktail}/></li>);
     return (
       <div className="App">
         <div className="App-header">
@@ -78,7 +87,9 @@ class App extends Component {
           <h2>Welcome to Alcobot</h2>
         </div>
         <SearchBox value="Whiskey" handleSubmit={this.handleSearch}/>
-        <RecipeSummary recipe={whiskeySourRecipe}/>
+        <ul>
+          {recipeSummaryItems}
+        </ul>
       </div>
     );
   }
