@@ -2,13 +2,37 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const whiskeySourRecipe = {
+  "name": "Whiskey Sour",
+  "ingredients": [
+    {
+      "name": "Whiskey",
+      "amount": "50ml"
+    }, {
+      "name": "Lemon juice",
+      "amount": "25ml"
+    }
+  ]
+}
+
+function IngredientDetail(props) {
+  const ingredient = props.ingredient
+  return <div>{ingredient.name}, {ingredient.amount}</div>
+}
+
 function RecipeSummary(props) {
-  const name = props.name;
+  const recipe = props.recipe;
+  const ingredientsList = recipe
+    .ingredients
+    .map((ingredient) => <li><IngredientDetail ingredient={ingredient}/></li>);
   return (
     <div className="RecipeSummary">
       <div className="RecipeSummaryName">
-        {name}
+        {recipe.name}
       </div>
+      <ul>
+        {ingredientsList}
+      </ul>
     </div>
   )
 }
@@ -21,7 +45,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <h2>Welcome to Alcobot</h2>
         </div>
-        <RecipeSummary name="Whiskey Sour"/>
+        <RecipeSummary recipe={whiskeySourRecipe}/>
       </div>
     );
   }
