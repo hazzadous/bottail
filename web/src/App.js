@@ -37,7 +37,39 @@ function RecipeSummary(props) {
   )
 }
 
+class SearchBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit = (event) => {
+    this
+      .props
+      .handleSubmit(this.state.value);
+  }
+
+  render() {
+    return (
+      <div>
+        <input type="text" value={this.state.value} onChange={this.handleChange}/>
+        <button onClick={this.handleSubmit}>Search!</button>
+      </div>
+    )
+  }
+}
+
 class App extends Component {
+  handleSearch = (value) => {
+    alert('Searching for ' + value);
+  }
+
   render() {
     return (
       <div className="App">
@@ -45,6 +77,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <h2>Welcome to Alcobot</h2>
         </div>
+        <SearchBox value="Whiskey" handleSubmit={this.handleSearch}/>
         <RecipeSummary recipe={whiskeySourRecipe}/>
       </div>
     );
