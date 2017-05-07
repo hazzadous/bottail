@@ -22,7 +22,7 @@ function IngredientDetail(props) {
 
 function RecipeSummary(props) {
   const recipe = props.recipe;
-  const ingredientsList = recipe
+  const ingredientsItems = recipe
     .ingredients
     .map((ingredient) => <li><IngredientDetail ingredient={ingredient}/></li>);
   return (
@@ -31,7 +31,7 @@ function RecipeSummary(props) {
         {recipe.name}
       </div>
       <ul>
-        {ingredientsList}
+        {ingredientsItems}
       </ul>
     </div>
   )
